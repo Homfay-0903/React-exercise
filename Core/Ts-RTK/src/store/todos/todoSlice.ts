@@ -1,9 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Todo, TodosState, TodoStatus } from './todoTypes';
+import { fetchTodosThunk } from './todoThunks';
 
-const initialState: TodosState = {
-    items: []
+interface TodosStateWithAsync extends TodosState {
+    loading: boolean
+    error: string | null
+    total: number
+}
+
+const initialState: TodosStateWithAsync = {
+    items: [],
+    loading: false,
+    error: null,
+    total: 0
 }
 
 export const todoSlice = createSlice({
@@ -32,6 +42,22 @@ export const todoSlice = createSlice({
                 todo.status = status
             }
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchTodosThunk.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchTodosThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.items = action.payload.data
+                state.total = action.payload.total
+            })
+            .addCase(fetchTodosThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload ?? 'unknown error'
+            })
     }
 })
 

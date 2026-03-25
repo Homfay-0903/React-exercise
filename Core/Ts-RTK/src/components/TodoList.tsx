@@ -1,10 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/store';
 import { addTodos, deleteTodos, updateStatus } from '../store/todos/todoSlice';
+import { fetchTodosThunk } from '../store/todos/todoThunks';
 import type { TodoStatus } from '../store/todos/todoTypes';
 
 const TodoList = () => {
     const todos = useSelector((state: RootState) => state.todos.items)
+    const loading = useSelector((state: RootState) => state.todos.loading)
+    const error = useSelector((state: RootState) => state.todos.error)
     const dispatch = useDispatch<AppDispatch>()
 
     const handleAdd = () => {
@@ -19,9 +22,16 @@ const TodoList = () => {
         dispatch(updateStatus({ id, status }))
     }
 
+    const handleFetch = () => {
+        dispatch(fetchTodosThunk({ page: 1, limit: 10 }))
+    }
+
     return (
         <div>
             <button onClick={handleAdd}>ADD</button>
+            <button onClick={handleFetch}>FETCH</button>
+            {loading && <p>loading...</p>}
+            {error && <p>error: {error}</p>}
             <ul>
                 {todos.map(todo => (
                     <li key={todo.id}>
