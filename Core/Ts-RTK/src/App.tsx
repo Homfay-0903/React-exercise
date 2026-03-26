@@ -1,5 +1,6 @@
 import TodoList from "./components/TodoList";
 import ThemeToggle from "./components/ThemeToggle";
+import DashBoard from "./components/Dashboard";
 
 const App = () => {
   return (
@@ -7,6 +8,8 @@ const App = () => {
       <TodoList></TodoList>
       <hr />
       <ThemeToggle></ThemeToggle>
+      <hr />
+      <DashBoard></DashBoard>
     </div>
   )
 }
