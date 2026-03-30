@@ -1,36 +1,43 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy } from "react";
 import type { AppRouteConfig } from "./types";
+import ProtectedRoute from "../components/ProtectedRoute";
 import App from "../App";
 
-const Login = lazy(() => import('../pages/Login'))
+const Login = lazy(() => import('../pages/Login'));
 const Home = lazy(() => import('../pages/Home'));
-const UserDetail = lazy(() => import('../pages/UserDetail'))
+const UserDetail = lazy(() => import('../pages/UserDetail'));
+const UserList = lazy(() => import('../pages/UserList'))
 
 const routes: AppRouteConfig[] = [
     {
-        path: '/',
+        path: 'home',
         name: 'Home',
         component: Home,
-        meta: { title: '首页' }
+        meta: { title: '首页', requiresAuth: true }
     },
     {
-        path: '/login',
+        path: 'login',
         name: 'Login',
         component: Login,
         meta: { title: '登录' }
     },
     {
-        path: '/user/:id',
+        path: '/users',
+        name: 'UserList',
+        component: UserList,
+        meta: { title: '用户列表', requiresAuth: true }
+    },
+    {
+        path: 'user/:id',
         name: 'UserDetail',
         component: UserDetail,
         loader: async ({ params }) => {
-            // 这里可以添加数据获取逻辑
-            return { user: { id: params.id, name: '测试用户' } }
+            return { user: { id: params.id, name: '测试用户' } };
         },
         meta: { title: '用户详情', requiresAuth: true }
     }
-]
+];
 
 const router = createBrowserRouter([
     {
@@ -38,11 +45,11 @@ const router = createBrowserRouter([
         Component: App,
         children: routes.map(route => ({
             path: route.path,
-            Component: route.component,
+            element: <ProtectedRoute component={route.component} meta={route.meta!} />,
             loader: route.loader,
             meta: route.meta
         }))
     }
-])
+]);
 
-export default router
+export default router;
