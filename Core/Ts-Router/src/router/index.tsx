@@ -1,37 +1,38 @@
 import { createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
+//import { lazy } from "react";
+import { lazyLoad } from './lazy';
 import type { AppRouteConfig } from "./types";
 import ProtectedRoute from "../components/ProtectedRoute";
 import App from "../App";
 
-const Login = lazy(() => import('../pages/Login'));
-const Home = lazy(() => import('../pages/Home'));
-const UserDetail = lazy(() => import('../pages/UserDetail'));
-const UserList = lazy(() => import('../pages/UserList'))
+//const Login = lazy(() => import('../pages/Login'));
+//const Home = lazy(() => import('../pages/Home'));
+//const UserDetail = lazy(() => import('../pages/UserDetail'));
+//const UserList = lazy(() => import('../pages/UserList'))
 
 const routes: AppRouteConfig[] = [
     {
         path: 'home',
         name: 'Home',
-        component: Home,
+        component: lazyLoad(() => import('../pages/Home')),
         meta: { title: '首页', requiresAuth: true }
     },
     {
         path: 'login',
         name: 'Login',
-        component: Login,
+        component: lazyLoad(() => import('../pages/Login')),
         meta: { title: '登录' }
     },
     {
         path: '/users',
         name: 'UserList',
-        component: UserList,
+        component: lazyLoad(() => import('../pages/UserList')),
         meta: { title: '用户列表', requiresAuth: true }
     },
     {
         path: 'user/:id',
         name: 'UserDetail',
-        component: UserDetail,
+        component: lazyLoad(() => import('../pages/UserDetail')),
         loader: async ({ params }) => {
             return { user: { id: params.id, name: '测试用户' } };
         },

@@ -1,69 +1,11 @@
-# React + TypeScript + Vite
+# React19 + React Router 6+ + TS 练习题
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1.基于 TS 定义路由配置类型，使用 createBrowserRouter 配置路由（首页、登录、用户列表、用户详情、404），要求 loader/action/meta 均通过 TS 类型约束，且 useParams 获取用户详情 ID 时能自动推导类型。
 
-Currently, two official plugins are available:
+2.实现受保护路由：基于 meta.requiresAuth 封装鉴权组件，未登录时重定向到登录页，要求 TS 约束组件的 props 类型，且路由嵌套时无类型报错。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3.实现路由懒加载：使用 React.lazy + Suspense 拆分路由组件，要求 TS 约束懒加载组件的类型，且加载中显示骨架屏。
 
-## Expanding the ESLint configuration
+4.基于 loader + TS 实现路由预加载：进入商品详情页前，通过 loader 请求商品数据，要求 TS 约束 loader 的返回值类型，组件中通过 useLoaderData 自动推导数据类型。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+5.封装一个通用的路由跳转 Hook（基于 useNavigate），要求 TS 约束跳转的路径、参数类型，且支持「替换历史记录」「返回上一页」等操作，无类型报错。
