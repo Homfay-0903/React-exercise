@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 //import { lazy } from "react";
 import { lazyLoad } from './lazy';
-import type { AppRouteConfig } from "./types";
+import type { AppRouteConfig, User } from "./types";
 import ProtectedRoute from "../components/ProtectedRoute";
 import App from "../App";
 
@@ -33,8 +33,8 @@ const routes: AppRouteConfig[] = [
         path: 'user/:id',
         name: 'UserDetail',
         component: lazyLoad(() => import('../pages/UserDetail')),
-        loader: async ({ params }) => {
-            return { user: { id: params.id, name: '测试用户' } };
+        loader: async ({ params }): Promise<{ user: User }> => {
+            return { user: { id: params.id!, name: '测试用户', email: 'test@example.com' } };
         },
         meta: { title: '用户详情', requiresAuth: true }
     }

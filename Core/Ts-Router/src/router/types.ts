@@ -4,6 +4,12 @@ import type {
     Params
 } from 'react-router-dom';
 
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+}
+
 export interface AppRouteMeta {
     title: string,
     requiresAuth?: boolean

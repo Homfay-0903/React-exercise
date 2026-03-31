@@ -10,6 +10,7 @@ const App = () => {
           <li><Link to="/home">首页</Link></li>
           <li><Link to="/login">登录</Link></li>
           <li><Link to="/users">用户</Link></li>
+          <li><Link to="/user/2">用户详情</Link></li>
         </ul>
       </nav>
 
