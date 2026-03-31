@@ -33,9 +33,9 @@ const routes: AppRouteConfig[] = [
         path: 'user/:id',
         name: 'UserDetail',
         component: lazyLoad(() => import('../pages/UserDetail')),
-        loader: async ({ params }): Promise<{ user: User }> => {
-            return { user: { id: params.id!, name: '测试用户', email: 'test@example.com' } };
-        },
+        //loader: async ({ params }): Promise<{ user: User }> => {
+        //    return { user: { id: params.id!, name: '测试用户', email: 'test@example.com' } };
+        //},
         meta: { title: '用户详情', requiresAuth: true }
     }
 ];

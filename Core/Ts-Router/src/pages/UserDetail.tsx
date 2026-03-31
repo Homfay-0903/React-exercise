@@ -1,8 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 import type { User } from "../router/types";
 
 const UserDetail = () => {
-    const { user } = useLoaderData() as { user: User }
+    const location = useLocation()
+    const stateUser = location.state?.user as User | undefined
+    //const { user: loaderUser } = useLoaderData() as { user: User }
+
+    //const user = stateUser || loaderUser
+    const user = stateUser as User
 
     return (
         <div>
